@@ -13,7 +13,14 @@ This API allows for the management of shifts for healthcare professionals in dif
 ### Prerequisites
 
 - Node.js
-- DB
+- yarn/npm
+- database initialization set up at `/models/index.js` as below
+```bash
+Sequelize(`postgres://postgres:postgres@localhost:5432/postgres`, {
+    dialect: 'postgres', 
+    logging: false 
+    })
+```
 
 ### Installation
 
