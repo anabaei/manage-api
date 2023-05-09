@@ -2,21 +2,10 @@
 import { Op } from "sequelize";
 import { sequelize } from "../models/index.js";
 const { Shift, Facility } = sequelize.models;
+import { getShiftsByDate } from '../helper/_shiftsByDate.js';
 
-function getShiftsByDate(activeFacilities) {
-  const shiftsByDate = activeFacilities.reduce((result, facility) => {
-    facility.Shifts.forEach((shift) => {
-      const date = shift.start.toISOString().slice(0, 10);
-      if (!result[date]) {
-        result[date] = [];
-      }
-      result[date].push(shift);
-    });
-    return result;
-  }, {});
 
-  return shiftsByDate;
-}
+
 
 // Define facilityService object with method(s)
 const facilityService = {
@@ -30,9 +19,11 @@ const facilityService = {
   },
 
   async getActiveFacilities(
-    startDate = "2022-01-07T12:00:00.201Z",
-    endDate = "2023-04-07T17:00:00.201Z",
-    id
+    startDate,
+    endDate,
+    id,
+    page = 1,
+    pageSize = 1
   ) {
     const activeFacilities = await Facility.findAll({
       attributes: ["id"],
@@ -54,6 +45,8 @@ const facilityService = {
           required: true,
         },
       ],
+      offset: (page - 1) * pageSize,
+      limit: pageSize,
     });
     return getShiftsByDate(activeFacilities);
   },

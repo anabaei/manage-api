@@ -2,21 +2,8 @@ import Sequelize from "sequelize";
 import { Op } from "sequelize";
 import { sequelize } from "../models/index.js";
 const { Shift, Facility } = sequelize.models;
+import { getShiftsByDate } from '../helper/_shiftsByDate.js';
 
-function getShiftsByDate(activeFacilities) {
-  const shiftsByDate = activeFacilities.reduce((result, facility) => {
-    facility.Shifts.forEach((shift) => {
-      const date = shift.start.toISOString().slice(0, 10);
-      if (!result[date]) {
-        result[date] = [];
-      }
-      result[date].push(shift);
-    });
-    return result;
-  }, {});
-
-  return shiftsByDate;
-}
 
 // Define shiftService object with method(s)
 const shiftService = {
@@ -57,7 +44,6 @@ const shiftService = {
       limit: pageSize,
     });
     const [{ name }] = result;
-   
     return { name, ...getShiftsByDate(result) };
   },
 

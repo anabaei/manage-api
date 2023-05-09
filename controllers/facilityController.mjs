@@ -3,11 +3,13 @@ import facilityService from "../services/facilityService.mjs";
 export const getShifts = async (req, res) => {
   try {
     const { facility_id } = req.params;
-    const { start, end } = req.query;
+    const { start_date, end_date, page, page_size } = req.query;
     const availableShifts = await facilityService.getActiveFacilities(
-      start,
-      end,
-      facility_id
+      start_date,
+      end_date,
+      facility_id,
+      page,
+      page_size
     );
     res.json(availableShifts);
   } catch (err) {
