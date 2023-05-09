@@ -37,6 +37,8 @@ yarn install
 
 ```
 yarn dev  
+or 
+npm run dev
 ```
 
 ## Usage
