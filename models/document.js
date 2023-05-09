@@ -1,7 +1,7 @@
 import Sequelize from "sequelize";
 
 const Document = (sequelize) => {
-const model = sequelize.define(
+  const model = sequelize.define(
     "Document",
     {
       id: {
@@ -15,16 +15,16 @@ const model = sequelize.define(
       is_required: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
-      }
+      },
     },
     {
       tableName: "Document",
     },
     {
-      timestamps: false, 
+      timestamps: false,
     }
   );
- return model
-}
-  
-  export default Document;
+  return model;
+};
+
+export default Document;

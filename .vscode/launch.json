@@ -6,7 +6,7 @@
     "configurations": [
         {
             "type": "node",
-            "program": "app.mjs",
+            "program": "app.js",
             "request": "launch",
             "restart": true,
             "runtimeExecutable": "yarn dev",
@@ -19,7 +19,7 @@
 			"type": "node",
 			"request": "launch",
 			"name": "Debug (beta)",
-			"program": "${workspaceFolder}/app.mjs",
+			"program": "${workspaceFolder}/app.js",
 			"runtimeArgs": [
 				"--experimental-modules",
 				"--experimental-json-modules",

@@ -1,9 +1,8 @@
-import express from 'express';
-import { getShifts } from '../controllers/facilityController.mjs';
+import express from "express";
+import { getShifts } from "../controllers/facilityController.mjs";
 
 const router = express.Router();
 
-router.get('/:facility_id/shifts', getShifts);
+router.get("/:facility_id/shifts", getShifts);
 
-export default router
-
+export default router;

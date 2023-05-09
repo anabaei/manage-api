@@ -1,8 +1,7 @@
 // Import Sequelize ORM
 import { Op } from "sequelize";
-import { sequelize } from '../models/index.js';
-const {Shift, Facility} = sequelize.models
-
+import { sequelize } from "../models/index.js";
+const { Shift, Facility } = sequelize.models;
 
 function getShiftsByDate(activeFacilities) {
   const shiftsByDate = activeFacilities.reduce((result, facility) => {
@@ -19,7 +18,6 @@ function getShiftsByDate(activeFacilities) {
   return shiftsByDate;
 }
 
-
 // Define facilityService object with method(s)
 const facilityService = {
   async getShifts() {
@@ -34,27 +32,28 @@ const facilityService = {
   async getActiveFacilities(
     startDate = "2022-01-07T12:00:00.201Z",
     endDate = "2023-04-07T17:00:00.201Z",
-    id,
+    id
   ) {
     const activeFacilities = await Facility.findAll({
-    
-      attributes: [ "id"],
+      attributes: ["id"],
       where: {
-        id
+        id,
       },
-      include: [{
-        model: Shift,
-        attributes: ["start", "end"],
-        where: {
-          end: {
-            [Op.between]: [startDate, endDate],
+      include: [
+        {
+          model: Shift,
+          attributes: ["start", "end"],
+          where: {
+            end: {
+              [Op.between]: [startDate, endDate],
+            },
+            start: {
+              [Op.between]: [startDate, endDate],
+            },
           },
-          start: {
-            [Op.between]: [startDate, endDate],
-          },
+          required: true,
         },
-        required: true,
-      }]
+      ],
     });
     return getShiftsByDate(activeFacilities);
   },

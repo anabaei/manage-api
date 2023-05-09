@@ -1,7 +1,7 @@
 import Sequelize from "sequelize";
 import { Op } from "sequelize";
-import { sequelize } from '../models/index.js';
-const {Shift, Facility } = sequelize.models
+import { sequelize } from "../models/index.js";
+const { Shift, Facility } = sequelize.models;
 
 function getShiftsByDate(activeFacilities) {
   const shiftsByDate = activeFacilities.reduce((result, facility) => {
@@ -18,38 +18,30 @@ function getShiftsByDate(activeFacilities) {
   return shiftsByDate;
 }
 
-
 // Define shiftService object with method(s)
 const shiftService = {
-
   async getAllShiftsNotFromFacility(
     startDate,
     endDate,
     id,
-    page =1,
-    pageSize =1
+    page = 1,
+    pageSize = 1
   ) {
     const activeFacilities = await Facility.findAll({
       where: {
         is_active: true,
-        id:  {
+        id: {
           [Sequelize.Op.ne]: id,
-        }
+        },
       },
       attributes: [
         // "id",
         "name",
-        "is_active"
+        "is_active",
       ],
       include: {
         model: Shift,
-        attributes: [
-          "id",
-          "start",
-          "end",
-          "is_deleted",
-          "profession"
-        ],
+        attributes: ["id", "start", "end", "is_deleted", "profession"],
         where: {
           end: {
             [Op.between]: [startDate, endDate],
@@ -69,32 +61,20 @@ const shiftService = {
     });
     return getShiftsByDate(activeFacilities);
   },
-  
-  
-  async getAvailableShifts(
-    startDate,
-    endDate,
-    pageSize = 1,
-    page = 1
-  ) {
+
+  async getAvailableShifts(startDate, endDate, pageSize = 1, page = 1) {
     const activeFacilities = await Facility.findAll({
       where: {
-        is_active: true
+        is_active: true,
       },
       attributes: [
         // "id",
         "name",
-        "is_active"
+        "is_active",
       ],
       include: {
         model: Shift,
-        attributes: [
-          "id",
-          "start",
-          "end",
-          "is_deleted",
-          "profession",
-        ],
+        attributes: ["id", "start", "end", "is_deleted", "profession"],
         where: {
           end: {
             [Sequelize.Op.ne]: startDate,
@@ -115,7 +95,6 @@ const shiftService = {
     // return activeFacilities
     return getShiftsByDate(activeFacilities);
   },
-
 };
 
 // Export shiftService object

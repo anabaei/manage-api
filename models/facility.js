@@ -15,7 +15,7 @@ const Facility = (sequelize) => {
       is_active: {
         type: Sequelize.STRING,
         allowNull: false,
-      }
+      },
     },
     {
       tableName: "Facility",
@@ -25,7 +25,7 @@ const Facility = (sequelize) => {
 
   model.associate = () => {
     const Shift = sequelize.models.Shift;
-    model.hasMany(Shift, { foreignKey: 'facility_id' });
+    model.hasMany(Shift, { foreignKey: "facility_id" });
   };
 
   return model;

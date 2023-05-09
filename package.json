@@ -13,8 +13,8 @@
     "yamljs": "^0.3.0"
   },
   "scripts": {
-    "start": "node app.mjs",
-    "dev": "nodemon app.mjs",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "mocha"
   }
 }

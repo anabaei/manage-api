@@ -1,9 +1,7 @@
-
 import Sequelize from "sequelize";
 
-
-const FacilityRequirement= (sequelize) => {
-const model = sequelize.define(
+const FacilityRequirement = (sequelize) => {
+  const model = sequelize.define(
     "FacilityRequirement",
     {
       id: {
@@ -15,11 +13,10 @@ const model = sequelize.define(
       tableName: "FacilityRequirement",
     },
     {
-      timestamps: false, 
+      timestamps: false,
     }
   );
-return model 
-  }
+  return model;
+};
 
-
-export default FacilityRequirement
+export default FacilityRequirement;
