@@ -14,7 +14,7 @@ This API allows for the management of shifts for healthcare professionals in dif
 
 - Node.js
 - yarn/npm
-- database initialization set up at `/models/index.js` as below
+- The process of initializing the database is set up in a file located at `./models/index.js`.
 ```bash
 Sequelize(`postgres://postgres:postgres@localhost:5432/postgres`, {
     dialect: 'postgres', 
