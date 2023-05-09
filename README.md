@@ -7,7 +7,7 @@ This API allows for the management of shifts for healthcare professionals in dif
 
 - Node.js
 - Express.js
-- DB
+- Sequelize
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ This API allows for the management of shifts for healthcare professionals in dif
 1. Clone the repository
 
 ```
-git clone https://github.com/your-username/shift-management-api.git
+git clone https://github.com/anabaei/challenge
 ```
 
 2. Install dependencies
