@@ -25,9 +25,7 @@ app.use("/facilities", facilityApi);
 // Log errors
 app.use((err, req, res, next) => {
   logger.error(
-    `${err.status || 500} - ${err.message} - ${req.originalUrl} - ${
-      req.method
-    } - ${req.ip}`
+    `${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method}`
   );
   next(err);
 });
