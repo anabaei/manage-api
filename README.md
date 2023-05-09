@@ -48,8 +48,6 @@ or
 npm run dev
 ```
 
-## Usage
-
 ### Endpoints
 * Are available at swagger 
 ```bash
@@ -140,6 +138,13 @@ Example response:
             "start":
 
 ```
+
+## Performance
+
+* To increase performance there are several solutions like caching and pagination. I implemented pagination on all urls, if no `page` or `page_size` not assigned the default value is always `1`
+
+* `Pagination` can reduce the amount of data that needs to be transferred over the network and improve the response time of the API.
+
 
 
 

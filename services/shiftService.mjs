@@ -27,22 +27,19 @@ const shiftService = {
     page = 1,
     pageSize = 1
   ) {
-    const activeFacilities = await Facility.findAll({
+    const result = await Facility.findAll({
       where: {
         is_active: true,
         id: {
           [Sequelize.Op.ne]: id,
         },
       },
-      attributes: [
-        // "id",
-        "name",
-        "is_active",
-      ],
+      attributes: ["name"],
       include: {
         model: Shift,
-        attributes: ["id", "start", "end", "is_deleted", "profession"],
+        attributes: ["profession", "start", "end"],
         where: {
+          is_deleted: false,
           end: {
             [Op.between]: [startDate, endDate],
           },
@@ -59,7 +56,9 @@ const shiftService = {
       offset: (page - 1) * pageSize,
       limit: pageSize,
     });
-    return getShiftsByDate(activeFacilities);
+    const [{ name }] = result;
+   
+    return { name, ...getShiftsByDate(result) };
   },
 
   async getAvailableShifts(startDate, endDate, pageSize = 1, page = 1) {
