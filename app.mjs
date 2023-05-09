@@ -4,6 +4,7 @@ import fs from 'fs';
 import swaggerUi from 'swagger-ui-express';
 import shiftApi from './apis/shiftApi.mjs';
 import facilityApi from './apis/facilityApi.mjs'
+import logger from './utils/logger.js';
 
 const swaggerDocument = YAML.load(fs.readFileSync('./apis/swagger.yaml', 'utf8'));
 const app = express();
@@ -19,7 +20,12 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/shifts', shiftApi);
 app.use('/facilities', facilityApi);
 
+// Log errors
+app.use((err, req, res, next) => {
+    logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+    next(err);
+});
 
 app.listen(port, () => {
-console.log(`Example app listening at http://localhost:${port}`)
+logger.info(`Listening at http://localhost:${port}`)
 })
