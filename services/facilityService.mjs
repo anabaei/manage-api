@@ -4,20 +4,8 @@ import { sequelize } from "../models/index.js";
 const { Shift, Facility } = sequelize.models;
 import { getShiftsByDate } from '../helper/_shiftsByDate.js';
 
-
-
-
 // Define facilityService object with method(s)
 const facilityService = {
-  async getShifts() {
-    const shift = await Shift.findOne({
-      where: { id: 1 },
-      attributes: ["id", "facility_id"],
-    });
-    const facility = await shift.getFacility({ attributes: ["id"] });
-    return shift;
-  },
-
   async getActiveFacilities(
     startDate,
     endDate,
