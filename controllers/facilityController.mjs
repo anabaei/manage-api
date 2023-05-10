@@ -6,7 +6,7 @@ export const getShifts = async (req, res) => {
     const startTime = Date.now();
     const { facility_id } = req.params;
     const { start_date, end_date, page, page_size } = req.query;
-    const availableShifts = await facilityService.getActiveFacilities(
+    const results = await facilityService.getActiveFacilities(
       start_date,
       end_date,
       facility_id,
@@ -17,7 +17,7 @@ export const getShifts = async (req, res) => {
     const elapsedTime = endTime - startTime;
     logger.info(`Elapsed time : ${elapsedTime} ms`);
 
-    res.json(availableShifts);
+    res.json(results);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
