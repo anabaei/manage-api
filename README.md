@@ -55,12 +55,19 @@ http://localhost:3000/api-docs
 ```
 #### GET /shifts
 
-Retrieve all shifts within a start and end date.
+Retrieve all shifts within a start and end date for the which are available and not from the specific facility
 
 Query parameters:
 
 - `start_date` (required) - Start date for the range of shifts to retrieve (ISO 8601 format)
 - `end_date` (required) - End date for the range of shifts to retrieve (ISO 8601 format)
+
+Request:
+```javascript
+http://localhost:3000/shifts/available?facilityId=1&start_date=2023-01-07&end_date=2023-04-07&page=1&page_size=1
+
+specific facility id = 1
+```
 
 Example response:
 
@@ -94,6 +101,16 @@ Query parameters:
 - `start_date` (required) - Start date for the range of shifts to retrieve (ISO 8601 format)
 - `end_date` (required) - End date for the range of shifts to retrieve (ISO 8601 format)
 
+Example Request:
+```javascript
+GET http://localhost:3000/facilities/2/shifts?start_date=2021-01-07T12:00:00.201Z&end_date=2023-04-07T17:00:00.201Z
+
+facility_id = 2
+//as defualts
+page=1 
+page_size =1
+```
+
 Example response:
 
 ```json
@@ -113,13 +130,19 @@ Example response:
 
 #### GET /shifts/available
 
-Retrieve all available shifts for a specific facility within a start and end date.
+Retrieve all available shifts for a specific facility within a start and end date which are not claimed
 
 Query parameters:
 
 - `facilityId` (required) - ID of the facility to retrieve shifts for
 - `start_date` (required) - Start date for the range of shifts to retrieve (ISO 8601 format)
 - `end_date` (required) - End date for the range of shifts to retrieve (ISO 8601 format)
+
+
+Request:
+```javascript
+http://localhost:3000/shifts?start_date=2023-01-07T12:00:00.201Z&end_date=2023-04-07T17:00:00.201Z
+```
 
 Example response:
 
