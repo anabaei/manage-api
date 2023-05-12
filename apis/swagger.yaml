@@ -1,0 +1,123 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Shifts API
+  description: API for managing shifts
+paths:
+  /shifts:
+    get:
+      summary: Get all available shifts
+      parameters:
+        - $ref: "#/components/parameters/startDateParam"
+        - $ref: "#/components/parameters/endDateParam"
+        - $ref: "#/components/parameters/pageParam"
+        - $ref: "#/components/parameters/pageSizeParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShiftsByDate"
+  "/facilities/{facilityId}/shifts":
+    get:
+      summary: Get all shifts for a facility
+      parameters:
+        - $ref: "#/components/parameters/facilityIdParam"
+        - $ref: "#/components/parameters/startDateParam"
+        - $ref: "#/components/parameters/endDateParam"
+        - $ref: "#/components/parameters/pageParam"
+        - $ref: "#/components/parameters/pageSizeParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShiftsByFacility"
+  /shifts/available:
+    get:
+      summary: Get
+      responses:
+        default:
+          description: Default response
+servers:
+  - url: localhost:3000/
+components:
+  parameters:
+    facilityIdParam:
+      name: facilityId
+      in: query
+      description: ID of the facility
+      required: true
+      example: 4
+      schema:
+        type: integer
+        format: int32
+    startDateParam:
+      name: start_date
+      in: query
+      description: Start date for the range of shifts
+      required: true
+      example: 2023-01-07T12:00:00.201Z
+      schema:
+        type: string
+        format: date-time
+    endDateParam:
+      name: end_date
+      in: query
+      description: End date for the range of shifts
+      required: true
+      example: 2023-04-07T17:00:00.201Z
+      schema:
+        type: string
+        format: date-time
+    pageParam:
+      name: page
+      in: query
+      description: Page number for pagination
+      required: false
+      example: 1
+      schema:
+        type: integer
+        format: int32
+    pageSizeParam:
+      name: page_size
+      in: query
+      description: Number of items to return per page for pagination
+      required: false
+      example: 10
+      schema:
+        type: integer
+        format: int32
+  schemas:
+    Shift:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1597248
+        start:
+          type: string
+          format: date-time
+          example: 2023-02-01T21:00:00.000Z
+        end:
+          type: string
+          format: date-time
+          example: 2023-02-02T02:00:00.000Z
+        is_deleted:
+          type: boolean
+          example: true
+        profession:
+          type: string
+          example: LVN
+    ShiftsByDate:
+      type: object
+      additionalProperties:
+        $ref: "#/components/schemas/Shift"
+    ShiftsByFacility:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          $ref: "#/components/schemas/Shift"
