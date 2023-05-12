@@ -146,6 +146,8 @@ Example response:
 * `Pagination` can reduce the amount of data that needs to be transferred over the network and improve the response time of the API.
 
 
+### Database
+![Untitled-2022-12-08-1716](https://github.com/Clipboard-recruiting/candidate-sse-take-home-challenge-234/assets/7471619/e74af833-1e93-4647-a105-682dca13a01b)
 
 
 ### Tree structure of our APP 
@@ -175,4 +177,3 @@ Example response:
   - package.json
 
 Please review by @cbhrecruiters 
-
