@@ -11,7 +11,11 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@prisma/client": "^4.12.0",
+=======
+    "@prisma/client": "^4.13.0",
+>>>>>>> 12ffe32 (add services and apis)
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
   },

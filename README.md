@@ -1,63 +1,162 @@
-## Challenge 
+# Shift Management API
 
-The context for this challenge is the following: You work at a company that powers a marketplace app for healthcare facilities to hire healthcare professionals (a.k.a. workers).
+This API allows for the management of shifts for healthcare professionals in different facilities.
 
-Your role is that of a senior software engineer that is in charge of the backend service and responsible for the shift eligibility feature.
- 
-Shift eligibility is a feature that allows you to know what shifts are eligible for a specific Worker in specific facilities.
+## Technologies
 
-The entities that come into play are the following, `Shift`, `Facility`, `Worker`, `Document`, `FacilityRequirement`, and `DocumentWorker`.
+- Node.js
+- Express.js
+- Sequelize
 
-Your task is to complete the following User Story:
+## Getting Started
 
-Story: As a worker, I want to get all available shifts that I'm eligible to work for.  
+### Prerequisites
 
-### Acceptance Criteria:
+- Node.js
+- DB
 
- - In order for a Worker to be eligible for a shift, the rules are:
-	 - A Facility must be active.
-	 - The Shift must be active and not claimed by someone else.
-	 - The Worker must be active.
-	 - The Worker must not have claimed a shift that collides with the shift they are eligible for.
-	 - The professions between the Shift and Worker must match.
-	 - The Worker must have all the documents required by the facilities.
- - Given an active facility, when I request all available shifts within a start and end date, then it will return a list of shifts from that facility in the specified date range.
- - Given an inactive facility, when I request all available shifts within a start and end date, then it will not return a list of shifts from that facility.
- - Given a shift is claimed and is within the requested start and end date, when I request all available shifts within a start and end date, it will not return the claimed shift.
- - The shifts must be grouped by date.
+### Installation
+
+1. Clone the repository
+
+```
+git clone https://github.com/anabaei/challenge
+```
+
+2. Install dependencies
+
+```
+npm install 
+or
+yarn install
+```
+
+3. Create a `.env` file based on the `.env.example` file and set your own values for the environment variables.
+
+4. Start the application
+
+```
+yarn dev  
+```
+
+## Usage
+
+### Endpoints
+* Are available at swagger 
+```bash
+http://localhost:3000/api-docs
+```
+#### GET /shifts
+
+Retrieve all shifts within a start and end date.
+
+Query parameters:
+
+- `start_date` (required) - Start date for the range of shifts to retrieve (ISO 8601 format)
+- `end_date` (required) - End date for the range of shifts to retrieve (ISO 8601 format)
+
+Example response:
+
+```json
+{
+    "2023-02-01": [
+        {
+            "id": 1597248,
+            "start": "2023-02-01T21:00:00.000Z",
+            "end": "2023-02-02T02:00:00.000Z",
+            "is_deleted": true,
+            "profession": "LVN"
+        },
+        {
+            "id": 1598695,
+            "start": "2023-02-01T21:00:00.001Z",
+            "end": "2023-02-02T02:00:00.001Z",
+            "is_deleted": true,
+            "profession": "RN"
+        },
+    ]
+}
+```
+
+#### GET /facilities/:facilityId/shifts
+
+Retrieve all shifts for a specific facility within a start and end date.
+
+Query parameters:
+
+- `start_date` (required) - Start date for the range of shifts to retrieve (ISO 8601 format)
+- `end_date` (required) - End date for the range of shifts to retrieve (ISO 8601 format)
+
+Example response:
+
+```json
+{
+    "2023-03-01": [
+        {
+            "start": "2023-03-01T21:00:00.739Z",
+            "end": "2023-03-02T02:00:00.739Z"
+        },
+        {
+            "start": "2023-03-01T12:00:00.741Z",
+            "end": "2023-03-01T17:00:00.741Z"
+        },
+    ]
+}
+```
+
+#### GET /shifts/available
+
+Retrieve all available shifts for a specific facility within a start and end date.
+
+Query parameters:
+
+- `facilityId` (required) - ID of the facility to retrieve shifts for
+- `start_date` (required) - Start date for the range of shifts to retrieve (ISO 8601 format)
+- `end_date` (required) - End date for the range of shifts to retrieve (ISO 8601 format)
+
+Example response:
+
+```json
+{
+    "2023-02-01": [
+        {
+            "id": 1597248,
+            "start": "2023-02-01T21:00:00.000Z",
+            "end": "2023-02-02T02:00:00.000Z",
+            "is_deleted": true,
+            "profession": "LVN"
+        },
+        {
+            "id": 1598695,
+            "start":
+
+```
 
 
-We provide a PostgreSQL database and a seed file for the sake of the exercise. It is random such that:
 
- - Some shifts are claimed.
- - Some workers are inactive.
- - Some facilities are inactive
- - Some workers don’t meet all the documents a facility requires.
+### Tree structure of our APP 
 
+- app
+  - controllers
+    - userController.js
+    - postController.js
+  - middlewares
+    - auth.js
+    - error.js
+  - models
+    - user.js
+    - post.js
+  - routes
+    - api
+      - user.js
+      - post.js
+    - index.js
+  - services
+    - userService.js
+    - postService.js
+  - utils
+    - logger.js
+  - app.js
+  - config.js
+  - package.json
 
-## Challenge expectations:
-
-We expect you to provide an HTTP server, following REST ( or whatever you think suits the best), we also expect the following to be part of your submission:
-
- - Risk mitigation through proper testing.
- - Proper documentation for your endpoint
- - Proper error handling and logging.
- - A brief writeup on how you would guarantee a performant endpoint and how you measure its performance
- - (Bonus) Measure the performance of your endpoint and provide a brief report
-
-
-## Included in the challenge:
-  
-Seeding your database
-
-We provide a folder called `seed` and this folder contains a docker-compose.yaml file that helps you set up a database. It is a PostgreSQL database and it is seeded with about 2 million records. 
-
-To set it up go into the `seed` folder and execute the command `docker compose up --build`. Once it's done, do not stop the docker compose.  This way the database keeps running and you can have your framework of choice to connect it to the database using the following database URL `postgres://postgres:postgres@localhost:5432/postgres`.
-
-The seed script inserts a lot of workers, between those workers, there are 3 that fulfill all documents, they all have on of the professions, at the end of the seed script the ids + the profession will be printed, with that you can test your query and see results.
-
-## Submission:
-
-Please submit your solution in form of a PR. You are free in the choice of language and framework for this challenge. 
-
-After you have submitted your PR, please tag **cbhrecruiters** as a reviewer to notify us about your submission.
