@@ -202,6 +202,9 @@ Example response:
 
 Please review by @cbhrecruiters 
 
+### Tests
+* Manual test on endpoints are available via postman/insomnia to send/receive responses 
+* Unit tests using `mocha` could run using `yarn test` 
 
 #### Seeding DB 
 
