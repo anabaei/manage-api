@@ -5,6 +5,7 @@ import swaggerUi from "swagger-ui-express";
 import shiftApi from "./apis/shiftApi.mjs";
 import facilityApi from "./apis/facilityApi.mjs";
 import logger from "./utils/logger.js";
+import validateQuery from "./middlewares/validateQuery.js"
 
 const swaggerDocument = YAML.load(
   fs.readFileSync("./apis/swagger.yaml", "utf8")
@@ -19,8 +20,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Define routes
-app.use("/shifts", shiftApi);
-app.use("/facilities", facilityApi);
+app.use("/shifts",validateQuery, shiftApi);
+app.use("/facilities",validateQuery, facilityApi);
 
 // Log errors
 app.use((err, req, res, next) => {
