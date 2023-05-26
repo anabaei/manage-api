@@ -6,9 +6,7 @@ This API allows for the management of shifts for healthcare professionals in dif
 ## Technologies
 
 change
-=======
 
->>>>>>> c5786f0 (update with latest changes)
 - Node.js
 - Express.js
 - Sequelize
